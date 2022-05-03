@@ -1,6 +1,3 @@
-'''
-
-'''
 import cv2
 import numpy as np
 
@@ -29,25 +26,21 @@ class Canny:
         计算梯度图和梯度方向矩阵。
         :return: 生成的梯度图
         '''
-        print ('Get_gradient_img')
+        print('Get_gradient_img')
         # ------------- write your code bellow ----------------
 
-
-
-        # ------------- write your code above ----------------        
+        # ------------- write your code above ----------------
         return self.img
 
-    def Non_maximum_suppression (self):
+    def Non_maximum_suppression(self):
         '''
         对生成的梯度图进行非极大化抑制，将tan值的大小与正负结合，确定离散中梯度的方向。
         :return: 生成的非极大化抑制结果图
         '''
-        print ('Non_maximum_suppression')
+        print('Non_maximum_suppression')
         # ------------- write your code bellow ----------------
 
-
-
-        # ------------- write your code above ----------------        
+        # ------------- write your code above ----------------
         return self.img
 
     def Hysteresis_thresholding(self):
@@ -56,12 +49,10 @@ class Canny:
         将比低阈值大比高阈值小的点置为高阈值大小，方向在离散点上的确定与非极大化抑制相似。
         :return: 滞后阈值法结果图
         '''
-        print ('Hysteresis_thresholding')
+        print('Hysteresis_thresholding')
         # ------------- write your code bellow ----------------
 
-
-
-        # ------------- write your code above ----------------        
+        # ------------- write your code above ----------------
         return self.img
 
     def canny_algorithm(self):

@@ -5,6 +5,7 @@
 import numpy as np
 import math
 
+
 class Hough_transform:
     def __init__(self, img, angle, step=5, threshold=135):
         '''
@@ -17,9 +18,10 @@ class Hough_transform:
         self.img = img
         self.angle = angle
         self.y, self.x = img.shape[0:2]
-        self.radius = math.ceil(math.sqrt(self.y**2 + self.x**2))
+        self.radius = math.ceil(math.sqrt(self.y ** 2 + self.x ** 2))
         self.step = step
-        self.vote_matrix = np.zeros([math.ceil(self.y / self.step), math.ceil(self.x / self.step), math.ceil(self.radius / self.step)])
+        self.vote_matrix = np.zeros(
+            [math.ceil(self.y / self.step), math.ceil(self.x / self.step), math.ceil(self.radius / self.step)])
         self.threshold = threshold
         self.circles = []
 
@@ -29,8 +31,8 @@ class Hough_transform:
         元进行投票。每个点投出来结果为一折线。
         :return:  投票矩阵
         '''
-        print ('Hough_transform_algorithm')
-        
+        print('Hough_transform_algorithm')
+
         for i in range(1, self.y - 1):
             for j in range(1, self.x - 1):
                 if self.img[i][j] > 0:
@@ -38,21 +40,22 @@ class Hough_transform:
                     x = j
                     r = 0
                     while y < self.y and x < self.x and y >= 0 and x >= 0:
-                        self.vote_matrix[math.floor(y / self.step)][math.floor(x / self.step)][math.floor(r / self.step)] += 1
+                        self.vote_matrix[math.floor(y / self.step)][math.floor(x / self.step)][
+                            math.floor(r / self.step)] += 1
                         y = y + self.step * self.angle[i][j]
                         x = x + self.step
-                        r = r + math.sqrt((self.step * self.angle[i][j])**2 + self.step**2)
+                        r = r + math.sqrt((self.step * self.angle[i][j]) ** 2 + self.step ** 2)
                     y = i - self.step * self.angle[i][j]
                     x = j - self.step
-                    r = math.sqrt((self.step * self.angle[i][j])**2 + self.step**2)
+                    r = math.sqrt((self.step * self.angle[i][j]) ** 2 + self.step ** 2)
                     while y < self.y and x < self.x and y >= 0 and x >= 0:
-                        self.vote_matrix[math.floor(y / self.step)][math.floor(x / self.step)][math.floor(r / self.step)] += 1
+                        self.vote_matrix[math.floor(y / self.step)][math.floor(x / self.step)][
+                            math.floor(r / self.step)] += 1
                         y = y - self.step * self.angle[i][j]
                         x = x - self.step
-                        r = r + math.sqrt((self.step * self.angle[i][j])**2 + self.step**2)
+                        r = r + math.sqrt((self.step * self.angle[i][j]) ** 2 + self.step ** 2)
 
         return self.vote_matrix
-
 
     def Select_Circle(self):
         '''
@@ -60,8 +63,8 @@ class Hough_transform:
         用的是邻近点结果取平均值的方法，而非单纯的取极大值。
         :return: None
         '''
-        print ('Select_Circle')
-        
+        print('Select_Circle')
+
         houxuanyuan = []
         for i in range(0, math.ceil(self.y / self.step)):
             for j in range(0, math.ceil(self.x / self.step)):
@@ -108,7 +111,6 @@ class Hough_transform:
         result = np.array(possible).mean(axis=0)
         print("Circle core: (%f, %f)  Radius: %f" % (result[0], result[1], result[2]))
         self.circles.append((result[0], result[1], result[2]))
- 
 
     def Calculate(self):
         '''
